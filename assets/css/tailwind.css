@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-gray-50;
+}
+
+@layer components {
+    .btn {
+        @apply bg-[#12b488] text-white px-3 py-2 rounded-md text-sm text-white;
+    }
+    .main-container {
+        @apply lg:mx-20 xl:mx-24;
+    }
+    
+    /* Background styles for list icons */
+    .green-theme {
+        @apply peer-checked:bg-green-light hover:bg-green-light
+    }
+    .purple-theme {
+        @apply peer-checked:bg-purple-light hover:bg-purple-light
+    }
+    .berry-theme {
+        @apply peer-checked:bg-berry-light hover:bg-berry-light
+    }
+}
