@@ -21,9 +21,9 @@
 </template>
 
 <script setup>
-import { PencilIcon } from "@heroicons/vue/24/solid"
-import { TrashIcon } from "@heroicons/vue/24/solid"
-import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline"
+import { PencilIcon } from "@heroicons/vue/24/solid/index.js"
+import { TrashIcon } from "@heroicons/vue/24/solid/index.js"
+import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline/index.js"
 
 const { item } = defineProps(['item'])
 

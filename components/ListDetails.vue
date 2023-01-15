@@ -38,9 +38,9 @@
 </template>
 
 <script setup>
-  import { PencilIcon } from "@heroicons/vue/24/outline"
-  import { UserPlusIcon } from "@heroicons/vue/24/solid"
-  import { BookmarkIcon } from "@heroicons/vue/24/solid"
+  import { PencilIcon } from "@heroicons/vue/24/outline/index.js"
+  import { UserPlusIcon } from "@heroicons/vue/24/solid/index.js"
+  import { BookmarkIcon } from "@heroicons/vue/24/solid/index.js"
   const { list } = defineProps(['list'])
 
   const isEditDescActive = ref(false)

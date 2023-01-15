@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-  import { XMarkIcon } from "@heroicons/vue/24/solid"
+  import { XMarkIcon } from "@heroicons/vue/24/solid/index.js"
   const { list } = defineProps(['list'])
 
   const newLink = ref("")

@@ -1,6 +1,6 @@
 <script setup>
-  import { PlusIcon } from "@heroicons/vue/24/solid"
-  import { BellIcon } from "@heroicons/vue/24/outline"
+  import { PlusIcon } from "@heroicons/vue/24/solid/index.js"
+  import { BellIcon } from "@heroicons/vue/24/outline/index.js"
 
   const client = useSupabaseAuthClient()
   const user = useSupabaseUser()

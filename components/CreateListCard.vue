@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-  import { PlusIcon } from "@heroicons/vue/24/solid"
+  import { PlusIcon } from "@heroicons/vue/24/solid/index.js"
 </script>
 
 <style scoped>
