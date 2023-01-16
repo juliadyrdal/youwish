@@ -1,7 +1,7 @@
 <script setup>
 const supabase = useSupabaseClient()
-const user = useSupabaseUser()
 const supabaseAuth = useSupabaseAuthClient()
+const user = (await supabaseAuth.auth.getUser()).data.user
 
 const { data: lists } = await useAsyncData('lists', async () => {
   const { data } = await supabase.from('lists').select('id, title').order('created_at')
@@ -10,7 +10,7 @@ const { data: lists } = await useAsyncData('lists', async () => {
 })
 
 const { data: profiles} = await useAsyncData('profiles', async () => {
-  const { data } = await supabase.from('profiles').select('first_name').eq('id', user.value.id)
+  const { data } = await supabase.from('profiles').select('first_name').eq('id', user.id)
 
   return data
 })

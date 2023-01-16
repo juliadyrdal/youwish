@@ -16,10 +16,12 @@
 <script setup>
 // Fetch wish lists from supabase
 const client = useSupabaseClient()
-const user = useSupabaseUser()
+const supabaseAuth = useSupabaseAuthClient()
+const user = (await supabaseAuth.auth.getUser()).data.user
+
 
 const { data: lists } = await useAsyncData('lists', async () => {
-  const { data } = await client.from('lists').select().neq('owner_id', user.value.id).order('created_at', { ascending: false })
+  const { data } = await client.from('lists').select().neq('owner_id', user.id).order('created_at', { ascending: false })
 
   return data
 })
