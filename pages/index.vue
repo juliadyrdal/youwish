@@ -1,6 +1,7 @@
 <script setup>
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
+const supabaseAuth = useSupabaseAuthClient()
 
 const { data: lists } = await useAsyncData('lists', async () => {
   const { data } = await supabase.from('lists').select('id, title').order('created_at')
@@ -14,15 +15,19 @@ const { data: profiles} = await useAsyncData('profiles', async () => {
   return data
 })
 
+// const getCurrentUser = async () => {
+//         try {
+//             const { data: { user } } = await supabaseAuth.auth.getUser()
+//         } catch (error) {
+//             alert(error.error_description || error.message)
+//         } finally {
+//         }
+//         console.log('hello again' + user.value)
+//     }
 const getCurrentUser = async () => {
-        try {
-            const { data: { user } } = await supabase.auth.getUser()
-        } catch (error) {
-            alert(error.error_description || error.message)
-        } finally {
-        }
-        console.log('hello again' + user.value)
-    }
+  const usernow = (await supabaseAuth.auth.getUser()).data.user
+  console.log(usernow.id)
+}
 </script>
 
 <template>
