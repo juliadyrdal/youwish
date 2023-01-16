@@ -21,7 +21,7 @@ const getCurrentUser = async () => {
             alert(error.error_description || error.message)
         } finally {
         }
-        console.log('hello' + user.value)
+        console.log('hello again' + user.value)
     }
 </script>
 
