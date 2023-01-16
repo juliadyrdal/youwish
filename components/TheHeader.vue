@@ -3,7 +3,9 @@
   import { BellIcon } from "@heroicons/vue/24/outline/index.js"
 
   const client = useSupabaseAuthClient()
-  const user = useSupabaseUser()
+  const supabaseAuth = useSupabaseAuthClient()
+  const user = (await supabaseAuth.auth.getUser()).data.user
+
 
   async function signOutUser() {
     await client.auth.signOut()
