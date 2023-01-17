@@ -105,7 +105,7 @@
   const client = useSupabaseClient()
 
   const { data: items } = await useAsyncData('items', async () => {
-    const { data } = await client.from('items').select().eq('list_id', list.id).order('created_at')
+    const { data } = await client.from('items').select().eq('list_id', list.id).order('created_at', { ascending: false })
 
     return data
   })
@@ -116,7 +116,7 @@
     // wrap in if statement to prevent empty items
     if (newLink.value && newComment.value !== "") {
     // before request: close addItem modal
-    isInviteModalOpen.value = false
+    isModalOpen.value = false
     // insert new item to items table
     const { error } = await client.from('items')
       .insert({
