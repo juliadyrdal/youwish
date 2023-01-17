@@ -80,7 +80,9 @@
 <script setup>
   const router = useRouter();
   const client = useSupabaseClient()
-  const user = useSupabaseUser()
+  const supabaseAuth = useSupabaseAuthClient()
+  const user = (await supabaseAuth.auth.getUser()).data.user
+
 
   const newTitle = ref("")
   const newDescription = ref("")
@@ -118,11 +120,11 @@
       description: newDescription.value,
       color_theme: colorTheme.value,
       list_icon: listIcon.value,
-      owner_id: user.value.id,
+      owner_id: user.id,
     })
 }
 
-console.log(user.value.id)
+console.log(user.id)
 
 
 </script>

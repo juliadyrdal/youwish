@@ -129,11 +129,11 @@
   refreshNuxtData('items')
 }
 
-const { data: profiles} = await useAsyncData('profiles', async () => {
-  const { data } = await supabase.from('profiles').select('first_name').eq('id', user.value.id)
+// const { data: profiles} = await useAsyncData('profiles', async () => {
+//   const { data } = await supabase.from('profiles').select('first_name').eq('id', user.value.id)
 
-  return data
-})
+//   return data
+// })
 
 // get user id of submitted email
 async function getUserId(email) {
