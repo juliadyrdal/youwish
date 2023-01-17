@@ -114,14 +114,19 @@
   // }
 
   async function handleListSubmit() {
-  const { error } = await client.from('lists')
-    .insert({
-      title: newTitle.value,
-      description: newDescription.value,
-      color_theme: colorTheme.value,
-      list_icon: listIcon.value,
-      owner_id: user.id,
-    })
+    try {
+      const { error } = await client.from('lists')
+      .insert({
+        title: newTitle.value,
+        description: newDescription.value,
+        color_theme: colorTheme.value,
+        list_icon: listIcon.value,
+        owner_id: user.id,
+      })
+    } finally {
+      await navigateTo('/lists')
+    }
+  
 }
 
 console.log(user.id)

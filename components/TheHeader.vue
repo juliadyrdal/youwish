@@ -15,6 +15,7 @@
     await signOutUser()
     await navigateTo('/login')
   }
+  console.log(user)
 
 </script>
 
