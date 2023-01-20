@@ -4,7 +4,9 @@ export default defineNuxtConfig({
           '@nuxtjs/tailwindcss',
           'nuxt-icons',
           'nuxt-headlessui',
-          '@nuxtjs/supabase'
+          '@nuxtjs/supabase',
+          '@pinia/nuxt',
+          '@pinia-plugin-persistedstate/nuxt',
     ],
     css: ['~/assets/css/tailwind.css'],
     postcss: {

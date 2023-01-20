@@ -78,6 +78,10 @@
 </template>
 
 <script setup>
+  definePageMeta({
+    middleware: ['auth']
+  })
+
   const router = useRouter();
   const client = useSupabaseClient()
   const supabaseAuth = useSupabaseAuthClient()
