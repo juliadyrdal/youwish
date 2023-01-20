@@ -35,8 +35,8 @@
           </ul>
           <ul class="flex gap-6 items-center">
             <li v-if="userStore.session" class="nav-btn"><NuxtLink to="/create" class="transition-colors flex items-center gap-2 text-[#364870] hover:bg-[#CFD5E2] border border-[#364870] hover:border-[#CFD5E2] rounded-md px-4 py-2 pr-6"><PlusIcon class="h-6 w-6 text-[#364870]"/>Create</NuxtLink></li>
-            <li v-if="userStore.session"><button><BellIcon class="h-6 w-6 text-gray-500"/></button></li>
-            <li v-if="userStore.session"><button class="transition-colors uppercase bg-gray-100 hover:bg-[#CFD5E2] py-3 px-3.5 rounded-full"><span class="mr-[1px]">j</span>d<span></span></button></li>
+            <!-- <li v-if="userStore.session"><button><BellIcon class="h-6 w-6 text-gray-500"/></button></li>
+            <li v-if="userStore.session"><button class="transition-colors uppercase bg-gray-100 hover:bg-[#CFD5E2] py-3 px-3.5 rounded-full"><span class="mr-[1px]">j</span>d<span></span></button></li> -->
             <li><button v-if="userStore.session" @click="logout" class="transition-colors uppercase bg-gray-100 hover:bg-[#CFD5E2] py-3 px-3.5">Log out</button></li>
             <li><NuxtLink to="/login" v-if="!userStore.session" class="transition-colors uppercase border border-theme-dark rounded-sm text-theme-dark hover:bg-[#CFD5E2] py-3 px-3.5">Log in</NuxtLink></li>
             <li><NuxtLink to="/signup" v-if="!userStore.session" class="transition-colors uppercase bg-gray-100 hover:bg-[#CFD5E2] py-3 px-3.5">Create account</NuxtLink></li>
