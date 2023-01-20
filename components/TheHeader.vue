@@ -5,7 +5,6 @@
 
   const client = useSupabaseAuthClient()
   const supabaseAuth = useSupabaseAuthClient()
-  const user = (await supabaseAuth.auth.getUser()).data.user
 
   // initialize userStore
   const userStore = useUserStore()
@@ -19,7 +18,6 @@
     await signOutUser()
     await navigateTo('/login')
   }
-  console.log(user)
 
 </script>
 

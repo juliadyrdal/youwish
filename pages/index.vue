@@ -3,7 +3,6 @@ import { useUserStore } from '../stores/UserStore'
 
 const supabase = useSupabaseClient()
 const supabaseAuth = useSupabaseAuthClient()
-const user = (await supabaseAuth.auth.getUser()).data.user
 
 // initialize userStore
 const userStore = useUserStore()
@@ -15,7 +14,7 @@ const { data: lists } = await useAsyncData('lists', async () => {
 })
 
 const { data: profiles} = await useAsyncData('profiles', async () => {
-  const { data } = await supabase.from('profiles').select('first_name').eq('id', user.id)
+  const { data } = await supabase.from('profiles').select('first_name').eq('id', userStore.session.user.id)
 
   return data
 })
