@@ -78,14 +78,19 @@
 </template>
 
 <script setup>
+  import { useUserStore } from '../stores/UserStore'
+
   definePageMeta({
     middleware: ['auth']
   })
 
   const router = useRouter();
-  const client = useSupabaseClient()
+
+  const supabase = useSupabaseClient()
   const supabaseAuth = useSupabaseAuthClient()
-  const user = (await supabaseAuth.auth.getUser()).data.user
+
+  // initialize userStore
+  const userStore = useUserStore()
 
 
   const newTitle = ref("")
@@ -119,21 +124,19 @@
 
   async function handleListSubmit() {
     try {
-      const { error } = await client.from('lists')
+      const { error } = await supabase.from('lists')
       .insert({
         title: newTitle.value,
         description: newDescription.value,
         color_theme: colorTheme.value,
         list_icon: listIcon.value,
-        owner_id: user.id,
+        owner_id: userStore.session.user.id,
       })
     } finally {
       await navigateTo('/lists')
     }
   
 }
-
-console.log(user.id)
 
 
 </script>

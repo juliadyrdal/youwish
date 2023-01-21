@@ -21,7 +21,9 @@
   const supabase = useSupabaseClient()
   const supabaseAuth = useSupabaseAuthClient()
 
-// initialize userStore
+  // initialize userStore
+  const userStore = useUserStore()
+
     const { list } = defineProps(['list'])
   
     const colorThemePrimary = computed(() => ({
