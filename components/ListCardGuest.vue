@@ -6,7 +6,7 @@
         <div class="p-6">
           <h3 class="mb-2 text-2xl font-bold text-gray-900">{{ list.title }}</h3>
           <p class="mb-6 text-base text-gray-600 truncate">{{ list.description }}</p>
-          <h4 class="mb-2 text-lg font-semibold">{{ list.owner_id }}</h4>  
+          <div class="mb-2 flex gap-2 items-center justify-center text-theme-dark hover:text-theme-medium transition-colors"><UserCircleIcon class="h-6 w-6"/><button class="text-lg font-medium">{{ `${ownerName.first_name} ${ownerName.last_name}` }}</button></div>  
         <button class="mt-4 mb-2 w-full text-gray-700 border border-gray-600 px-16 py-1 rounded-md text-sm">View list</button>
         </div>
       </div>
@@ -14,6 +14,14 @@
   </template>
   
   <script setup>
+  import { useUserStore } from '../stores/UserStore'
+  import { UserCircleIcon } from "@heroicons/vue/24/outline/index.js"
+
+
+  const supabase = useSupabaseClient()
+  const supabaseAuth = useSupabaseAuthClient()
+
+// initialize userStore
     const { list } = defineProps(['list'])
   
     const colorThemePrimary = computed(() => ({
@@ -27,6 +35,12 @@
       'purple-secondary': list.color_theme === 'purple',
       'berry-secondary': list.color_theme === 'berry',
   }))
+
+  const { data: ownerName} = await useAsyncData('profiles', async () => {
+  const { data } = await supabase.from('profiles').select('first_name, last_name').eq('id', list.owner_id).single()
+
+  return data
+})
   </script>
   
   <style scoped>
