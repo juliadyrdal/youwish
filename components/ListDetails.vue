@@ -3,9 +3,14 @@
         <slot name="header"></slot>
      <div class="mt-16">
       <h2 class="mb-8 font-semibold text-theme-medium mx-2 lg:mx-10 xl:mx-16">My wishes</h2>
-          <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
           <div class="" v-for="item in items" :key="item.id">
-            <ListItem :item="item" />  
+            <div v-if="list.owner_id === userStore.session.user.id">
+              <ListItem :item="item" />
+            </div> 
+            <div v-else>
+              <ListItemGuest :item="item" />
+            </div> 
           </div> 
         </div>
      </div>
@@ -13,6 +18,14 @@
 </template>
 
 <script setup>
+import { useUserStore } from '../stores/UserStore'
+
+const supabase = useSupabaseClient()
+const supabaseAuth = useSupabaseAuthClient()
+
+// initialize userStore
+const userStore = useUserStore()
+
   const { list } = defineProps(['list'])
 
 

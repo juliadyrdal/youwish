@@ -14,10 +14,6 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: ['auth']
-})
-
 // Fetch wish lists from supabase
 const client = useSupabaseClient()
 const supabaseAuth = useSupabaseAuthClient()

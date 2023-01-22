@@ -17,21 +17,16 @@
 <script setup>
 import { useUserStore } from '../../stores/UserStore'
 
-definePageMeta({
-  middleware: ['auth']
-})
-
 // initialize userStore
 const userStore = useUserStore()
 
 // Fetch wish lists from supabase
-const client = useSupabaseClient()
+const supabase = useSupabaseClient()
 const supabaseAuth = useSupabaseAuthClient()
-const user = (await supabaseAuth.auth.getUser()).data.user
 
 
 const { data: lists } = await useAsyncData('lists', async () => {
-  const { data } = await client.from('lists').select().eq('owner_id', userStore.session.user.id).order('created_at', { ascending: false })
+  const { data } = await supabase.from('lists').select().eq('owner_id', userStore.session.user.id).order('created_at', { ascending: false })
 
   return data
 })

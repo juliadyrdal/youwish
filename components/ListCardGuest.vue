@@ -6,7 +6,7 @@
         <div class="p-6">
           <h3 class="mb-2 text-2xl font-bold text-gray-900">{{ list.title }}</h3>
           <p class="mb-6 text-base text-gray-600 truncate">{{ list.description }}</p>
-          <div class="mb-2 flex gap-2 items-center justify-center text-theme-dark hover:text-theme-medium transition-colors"><UserCircleIcon class="h-6 w-6"/><button class="text-lg font-medium">{{ `${ownerName.first_name} ${ownerName.last_name}` }}</button></div>  
+          <!-- <div v-if="ownerName" class="mb-2 flex gap-2 items-center justify-center text-theme-dark hover:text-theme-medium transition-colors"><UserCircleIcon class="h-6 w-6"/><button class="text-lg font-medium">{{ `${ownerName.first_name} ${ownerName.last_name}` }}</button></div>   -->
         <button class="mt-4 mb-2 w-full text-gray-700 border border-gray-600 px-16 py-1 rounded-md text-sm">View list</button>
         </div>
       </div>
@@ -38,11 +38,12 @@
       'berry-secondary': list.color_theme === 'berry',
   }))
 
-  const { data: ownerName} = await useAsyncData('profiles', async () => {
-  const { data } = await supabase.from('profiles').select('first_name, last_name').eq('id', list.owner_id).single()
+  // WHY ERROR IN CONSOLE?
+//   const { data: ownerName} = await useAsyncData('profiles', async () => {
+//   const { data } = await supabase.from('profiles').select('first_name, last_name').eq('id', list.owner_id).single()
 
-  return data
-})
+//   return data
+// })
   </script>
   
   <style scoped>
