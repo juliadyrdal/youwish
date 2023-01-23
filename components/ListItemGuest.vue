@@ -3,12 +3,13 @@
       <div v-on:mouseover="itemHover" v-on:mouseleave="itemLeave" :class="{ 'bg-theme-lighter': isHovering }" class="py-4 px-6 rounded-md mb-2 grid grid-cols-12 items-center gap-8 mx-2 lg:mx-10 xl:mx-10 transition-all duration-300">
         <!-- <p class="col-span-9 truncate" :class="{ reserved: item.reserved.isReserved, purchased: item.purchased.isPurchased }">{{ item.link }}</p> -->
         <div class="col-span-8">
-          <p class="truncate text-sm text-gray-700">{{ item.link }}</p>
-          <p class="">{{ item.comment }}</p>
+          <p class="truncate text-sm text-gray-700" :class="{ reserved: isReserved }">{{ props.item.link }}</p>
+          <p class="">{{ props.item.comment }}</p>
         </div>
         <div v-if="isHovering" class="pt-1 col-span-4 flex justify-between">
           <ul class="flex gap-5 items-center">
-            <li><button @click="$emit('openModal')"><BookmarkIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors"/></button></li>
+            <li v-if="!isReserved"><button @click="submitReservation"><BookmarkIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors" /></button></li>
+            <li v-else><button @click="submitUnreservation"><nuxt-icon name="BookmarkSolid" /></button></li>
           </ul>
           <button class="flex gap-2 items-center font-medium text-theme-dark hover:underline">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></button>
         </div>
@@ -17,10 +18,18 @@
 </template>
 
 <script setup>
-import { BookmarkIcon } from "@heroicons/vue/24/solid/index.js"
+import { BookmarkIcon } from "@heroicons/vue/24/outline/index.js"
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline/index.js"
+import { useUserStore } from '../stores/UserStore'
 
-const { item } = defineProps(['item'])
+const supabase = useSupabaseClient()
+const supabaseAuth = useSupabaseAuthClient()
+
+// initialize userStore
+const userStore = useUserStore()
+
+ const props = defineProps(['reservedItems', 'item'])
+
 
 const isHovering = ref(false)
 
@@ -31,6 +40,39 @@ function itemHover() {
 function itemLeave() {
   isHovering.value = false
 }
+
+// add error message
+// insert new reservation into reservations table
+async function submitReservation() {
+    const { error } = await supabase.from('items')
+      .update({
+        reserved_by: userStore.session.user.id
+      }).eq('id', props.item.id)
+}
+
+// remove item reservation
+async function submitUnreservation() {
+  const { error } = await supabase.from('items')
+    .update({
+      reserved_by: null
+    }).eq('id', props.item.id)
+}
+
+const isReserved = ref(false)
+const reservedBy = ref('')
+
+const currentReservations = () => {
+  props.reservedItems.forEach(element => {
+    if (element.id === props.item.id && element.reserved_by) {
+      isReserved.value = true
+      reservedBy.value = element.reserved_by
+    }
+  }); 
+}
+
+currentReservations()
+
+console.log(isReserved.value)
 </script>
 
 <style scoped>

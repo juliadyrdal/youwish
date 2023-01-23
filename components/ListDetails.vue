@@ -9,7 +9,7 @@
               <ListItem :item="item" />
             </div> 
             <div v-else>
-              <ListItemGuest :item="item" />
+              <ListItemGuest :reservedItems="reservedItems" :item="item" />
             </div> 
           </div> 
         </div>
@@ -37,6 +37,12 @@ const userStore = useUserStore()
 
     return data
   })
+
+  const { data: reservedItems } = await useAsyncData('reservedItems', async () => {
+const { data } = await supabase.from('items').select().eq('list_id', list.id)
+
+return data
+})
 </script>
 
 <style scoped>
