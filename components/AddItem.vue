@@ -8,7 +8,7 @@
         <input name="ink" type="text" v-model="newLink" class="w-full h-12 pl-6 border">
         <label for="comment" class="text-base">Comment</label>
         <textarea name="comment" v-model="newComment" class="w-full h-24 p-4 pl-6 border"></textarea>
-        <button class="w-2/6 bg-theme-medium hover:bg-theme-dark transition-colors text-white px-3 py-2 rounded-md text-lg font-medium my-4">Add new item</button>
+        <button @click="$emit('refreshItems')" class="w-2/6 bg-theme-medium hover:bg-theme-dark transition-colors text-white px-3 py-2 rounded-md text-lg font-medium my-4">Add new item</button>
       </form>
     </div>
   </div>
@@ -21,7 +21,7 @@
   const newLink = ref("")
   const newComment = ref("")
 
-  const emit = defineEmits(["handleItemSubmit", "closeModal"])
+  const emit = defineEmits(["handleItemSubmit", "closeModal", "refreshItems"])
 
   function emitSubmit() {
     emit("handleItemSubmit", newLink, newComment)

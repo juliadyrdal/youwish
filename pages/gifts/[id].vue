@@ -1,11 +1,7 @@
 <template>
   <div class="main-container">
     <div class="mx-2 lg:mx-12 xl:mx-24 mt-4 lg:mt-8 pb-10 pt-16 bg-white rounded-md">
-      <ListDetails :list="list">
-        <template #header>
-          <ListHeaderGuest :list="list" />
-        </template>
-      </ListDetails>
+      <ListDetails :list="list" />
     </div>
   </div>
 </template>

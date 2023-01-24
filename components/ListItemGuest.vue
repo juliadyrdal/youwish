@@ -2,14 +2,16 @@
     <div>
       <div v-on:mouseover="itemHover" v-on:mouseleave="itemLeave" :class="{ 'bg-theme-lighter': isHovering }" class="py-4 px-6 rounded-md mb-2 grid grid-cols-12 items-center gap-8 mx-2 lg:mx-10 xl:mx-10 transition-all duration-300">
         <!-- <p class="col-span-9 truncate" :class="{ reserved: item.reserved.isReserved, purchased: item.purchased.isPurchased }">{{ item.link }}</p> -->
-        <div class="col-span-8">
-          <p class="truncate text-sm text-gray-700" :class="{ reserved: isReserved }">{{ props.item.link }}</p>
+        <div class="col-span-8" :class="{ reserved: isReserved }">
+          <p class="truncate text-sm text-gray-700">{{ props.item.link }}</p>
           <p class="">{{ props.item.comment }}</p>
         </div>
         <div v-if="isHovering" class="pt-1 col-span-4 flex justify-between">
           <ul class="flex gap-5 items-center">
-            <li v-if="!isReserved"><button @click="submitReservation"><BookmarkIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors" /></button></li>
-            <li v-else><button @click="submitUnreservation"><nuxt-icon name="BookmarkSolid" /></button></li>
+            <!-- <li v-if="!isReserved"><button @click="submitReservation"><BookmarkIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors" /></button></li> -->
+            <li v-if="!isReserved"><button @click="submitReservation">Reserve this item</button></li>
+            <li v-else-if="reservedBy === userStore.session.user.id"><button @click="submitUnreservation">Undo reservation</button></li>
+            <li v-else><button>This item has been reserved</button></li>
           </ul>
           <button class="flex gap-2 items-center font-medium text-theme-dark hover:underline">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></button>
         </div>

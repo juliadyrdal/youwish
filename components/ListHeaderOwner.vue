@@ -21,7 +21,7 @@
         <button @click="openInviteModal" class="transition-colors flex items-center gap-2 text-[#364870] hover:bg-[#CFD5E2] border border-[#364870] hover:border-[#CFD5E2] rounded-md px-4 py-2 pr-6"><UserPlusIcon class="h-6 w-6 text-[#364870]"/>Invite members</button>
       </div>
       <div> 
-        <AddItem @handle-item-submit="submitItem" @close-modal="closeAddItem" v-if="isModalOpen" :list="list" />
+        <AddItem @refresh-items="updateItems" @handle-item-submit="submitItem" @close-modal="closeAddItem" v-if="isModalOpen" :list="list" />
       </div>
       <div> 
         <AddInvitee @handle-invite-submit="submitInvite" @close-modal="closeAddInvitee" v-if="isInviteModalOpen" :list="list" />
@@ -37,6 +37,8 @@
     const { list } = defineProps(['list'])
 
     const client = useSupabaseClient()
+
+    const emit = defineEmits(['refreshNewItem'])
 
     const isModalOpen = ref(false)
 
@@ -74,6 +76,10 @@
         })
       }
     //   refreshNuxtData('items') STATE MANAGEMENT
+    }
+
+    function updateItems() {
+       emit('refreshNewItem')
     }
 
 

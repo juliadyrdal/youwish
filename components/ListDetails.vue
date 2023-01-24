@@ -1,6 +1,12 @@
 <template>
     <div class="mb-14 flex flex-col gap-6">
-        <slot name="header"></slot>
+        <!-- <slot name="header"></slot> -->
+        <div v-if="list.owner_id === userStore.session.user.id">
+          <ListHeaderOwner @refresh-new-item="refresh" :list="list" />
+        </div> 
+        <div v-else>
+          <ListHeaderGuest :list="list" />
+        </div>
      <div class="mt-16">
       <h2 class="mb-8 font-semibold text-theme-medium mx-2 lg:mx-10 xl:mx-16">My wishes</h2>
         <div class="flex flex-col gap-2">
@@ -38,11 +44,15 @@ const userStore = useUserStore()
     return data
   })
 
-  const { data: reservedItems } = await useAsyncData('reservedItems', async () => {
-const { data } = await supabase.from('items').select().eq('list_id', list.id)
+  const refresh = () => {
+    refreshNuxtData()
+  }
 
-return data
-})
+  const { data: reservedItems } = await useAsyncData('reservedItems', async () => {
+    const { data } = await supabase.from('items').select().eq('list_id', list.id)
+
+    return data
+  })
 </script>
 
 <style scoped>
