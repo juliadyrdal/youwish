@@ -1,11 +1,14 @@
 <script setup>
 import { useUserStore } from '../stores/UserStore'
+import { useProfileStore } from '~~/stores/ProfileStore';
 
 const supabase = useSupabaseClient()
 const supabaseAuth = useSupabaseAuthClient()
 
 // initialize userStore
 const userStore = useUserStore()
+const profileStore = useProfileStore()
+
 
 const { data: lists } = await useAsyncData('lists', async () => {
   const { data } = await supabase.from('lists').select('id, title').order('created_at')
@@ -37,16 +40,22 @@ const { data: profiles} = await useAsyncData('profiles', async () => {
 <template>
     <div class="main-container">
         <div v-if="userStore.session" class="mt-16 mb-14">
-          <div v-if="profiles">
-            <h1 v-for="profile in profiles" class="mb-8 text-3xl font-bold"><span class="mr-3">🤩</span> Welcome, {{ profile.first_name }}!</h1>
+          <div v-if="profileStore.profile">
+            <h1 class="mb-8 text-3xl font-bold"><span class="mr-3">🤩</span> Welcome, {{ profileStore.profile.first_name }}!</h1>
             <p class="w-9/12 text-lg">Lorem ipsum dolor sit amet consectetur. Morbi sed in fermentum leo. Gravida risus commodo dui accumsan dui. Maecenas elit eu sollicitudin amet ut.</p>
           </div>
         </div>
         <div v-else class="mt-16 mb-14">
            <TheSignup /> 
         </div>
+        <div v-if="profileStore.profile">
+          <p>{{ profileStore.profile.first_name }}</p>
+        </div>
         <div v-if="userStore.session">
           <p>{{ userStore.session.user.id }}</p>
+        </div>
+        <div v-if="profileStore.profile">
+          <p>{{ profileStore.profile.last_name }}</p>
         </div>
     </div>
 </template>

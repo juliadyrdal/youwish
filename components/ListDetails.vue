@@ -12,7 +12,7 @@
         <div class="flex flex-col gap-2">
           <div class="" v-for="item in items" :key="item.id">
             <div v-if="list.owner_id === userStore.session.user.id">
-              <ListItem :item="item" />
+              <ListItem @refresh-new-item="refresh" :item="item" />
             </div> 
             <div v-else>
               <ListItemGuest :reservedItems="reservedItems" :item="item" />

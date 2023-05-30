@@ -1,24 +1,32 @@
 <script setup>
 import { useUserStore } from '~~/stores/UserStore';
+import { useProfileStore } from '~~/stores/ProfileStore';
+import { useListsStore } from '~~/stores/ListsStore';
 
+const supabase = useSupabaseClient()
 const supabaseAuth = useSupabaseAuthClient()
 const userStore = useUserStore()
+const profileStore = useProfileStore()
+const listsStore = useListsStore()
 
 supabaseAuth.auth.onAuthStateChange((event, session) => {
     console.log(event)
     userStore.session = session
-
-//     if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
-//     // delete cookies on sign out
-//     const expires = new Date(0).toUTCString()
-//     document.cookie = `my-access-token=; path=/; expires=${expires}; SameSite=Lax; secure`
-//     document.cookie = `my-refresh-token=; path=/; expires=${expires}; SameSite=Lax; secure`
-//   } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-//     const maxAge = 100 * 365 * 24 * 60 * 60 // 100 years, never expires
-//     document.cookie = `my-access-token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`
-//     document.cookie = `my-refresh-token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`
-//   }
 })
+
+    // get profile of current user
+    async function getProfile() {
+        const { data } = await supabase.from('profiles').select().eq('id', userStore.session.user.id).single()
+        profileStore.profile = data
+    }
+    // initialize 
+    getProfile()
+
+    async function getLists() {
+        const { data } = await supabase.from('lists').select().eq('owner_id', userStore.session.user.id).order('created_at', { ascending: false })
+        listsStore.lists = data
+    }
+    getLists()
   
 </script>
 

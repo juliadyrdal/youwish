@@ -1,5 +1,6 @@
 <script setup>
   import { useUserStore } from '../stores/UserStore'
+  import { useProfileStore } from '../stores/ProfileStore'
   import { PlusIcon } from "@heroicons/vue/24/solid/index.js"
   import { BellIcon } from "@heroicons/vue/24/outline/index.js"
 
@@ -8,6 +9,8 @@
 
   // initialize userStore
   const userStore = useUserStore()
+  // initialize profileStore
+  const profileStore = useProfileStore()
 
 
   async function signOutUser() {
@@ -16,6 +19,8 @@
 
   const logout = async () => {
     await signOutUser()
+    userStore.session = null
+    profileStore.profile = {}
     await navigateTo('/login')
   }
 
