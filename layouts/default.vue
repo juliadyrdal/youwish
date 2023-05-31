@@ -20,13 +20,18 @@ supabaseAuth.auth.onAuthStateChange((event, session) => {
         profileStore.profile = data
     }
     // initialize 
-    getProfile()
+    if (userStore.session) {
+        getProfile()
+    } 
 
     async function getLists() {
         const { data } = await supabase.from('lists').select().eq('owner_id', userStore.session.user.id).order('created_at', { ascending: false })
         listsStore.lists = data
     }
-    getLists()
+    
+    if (userStore.session) {
+        getLists()
+    }
   
 </script>
 
