@@ -107,6 +107,7 @@ async function submitInvite(newEmail) {
         invitee_id: userId.value.id,
         list_id: list.id,
       })
+    console.log("Insert data")
     }
 }
 

@@ -5,26 +5,24 @@
       <p class="w-9/12 text-base">Lorem ipsum dolor sit amet consectetur. Morbi sed in fermentum leo. Gravida risus commodo dui accumsan dui. Maecenas elit eu sollicitudin amet ut. Pellentesque rutrum a felis viverra.</p>
     </div>
     <h2 class="pb-8 text-sm uppercase underline">Wish lists you have been invited to</h2>
-    <div v-if="lists" class="grid grid-cols-2 xl:grid-cols-3 gap-8">
-      <div v-for="l in lists" :key="l.id">
-        <ListCardGuest :list="l" />
+    <div v-if="userStore.session">
+      <div v-if="listsStore.lists" class="grid grid-cols-2 xl:grid-cols-3 gap-8">
+      <CreateListCard />
+      <div v-for="l in listsStore.lists" :key="l.id">
+        <ListCard :list="l" />
       </div>
+    </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// Fetch wish lists from supabase
-const client = useSupabaseClient()
-const supabaseAuth = useSupabaseAuthClient()
-const user = (await supabaseAuth.auth.getUser()).data.user
+import { useUserStore } from '../../stores/UserStore'
+import { useListsStore } from '~~/stores/ListsStore';
 
-
-const { data: lists } = await useAsyncData('lists', async () => {
-  const { data } = await client.from('lists').select().neq('owner_id', user.id).order('created_at', { ascending: false })
-
-  return data
-})
+// initialize userStore
+const userStore = useUserStore()
+const listsStore = useListsStore()
 </script>
 
 <style scoped>
