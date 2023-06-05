@@ -7,7 +7,6 @@
     <h2 class="pb-8 text-sm uppercase underline">Wish lists you have been invited to</h2>
     <div v-if="userStore.session">
       <div v-if="inviteStore.lists" class="grid grid-cols-2 xl:grid-cols-3 gap-8">
-      <CreateListCard />
       <div v-for="l in inviteStore.lists" :key="l.id">
         <ListCard :list="l" />
       </div>

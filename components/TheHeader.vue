@@ -7,11 +7,9 @@
   import { BellIcon } from "@heroicons/vue/24/outline/index.js"
 
   const client = useSupabaseAuthClient()
-  const supabaseAuth = useSupabaseAuthClient()
 
-  // initialize userStore
+  // initialize stores
   const userStore = useUserStore()
-  // initialize profileStore
   const profileStore = useProfileStore()
   const inviteStore = useInviteStore()
   const listsStore = useListsStore()
@@ -23,6 +21,7 @@
 
   const logout = async () => {
     await signOutUser()
+    // reset states on logout
     userStore.session = null
     profileStore.profile = {}
     listsStore.lists = []
