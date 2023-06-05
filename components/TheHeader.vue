@@ -1,6 +1,8 @@
 <script setup>
   import { useUserStore } from '../stores/UserStore'
   import { useProfileStore } from '../stores/ProfileStore'
+  import { useInviteStore } from '../stores/InviteStore'
+  import { useListsStore } from '~~/stores/ListsStore'
   import { PlusIcon } from "@heroicons/vue/24/solid/index.js"
   import { BellIcon } from "@heroicons/vue/24/outline/index.js"
 
@@ -11,6 +13,8 @@
   const userStore = useUserStore()
   // initialize profileStore
   const profileStore = useProfileStore()
+  const inviteStore = useInviteStore()
+  const listsStore = useListsStore()
 
 
   async function signOutUser() {
@@ -21,6 +25,9 @@
     await signOutUser()
     userStore.session = null
     profileStore.profile = {}
+    listsStore.lists = []
+    inviteStore.invites = []
+    inviteStore.lists = []
     await navigateTo('/login')
   }
 
