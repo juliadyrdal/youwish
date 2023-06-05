@@ -38,22 +38,30 @@ supabaseAuth.auth.onAuthStateChange((event, session) => {
 
     // get profile of current user
     async function getInvites() {
-        const { data } = await supabase.from('invites').select('list_id').eq('invitee_id', userStore.session.user.id).single()
+        inviteStore.invites = []
+        const { data } = await supabase.from('invites').select('list_id').eq('invitee_id', userStore.session.user.id)
         inviteStore.invites = data
+        inviteStore.lists = []
+        for (let i = 0; i < inviteStore.invites.length; i++) {
+            const { data } = await supabase.from('lists').select().eq('id', inviteStore.invites[i].list_id).order('created_at', { ascending: false }).single()
+            inviteStore.lists[i] = data
+        }
     }
     // initialize 
     if (userStore.session) {
         getInvites()
     } 
 
-    async function getInviteLists() {
-        const { data } = await supabase.from('lists').select().eq('id', inviteStore.invites.list_id).order('created_at', { ascending: false })
-        inviteStore.lists = data
-    }
 
-    if (userStore.session) {
-        getInviteLists()
-    }
+    // async function getInviteLists() {
+    //     const { data } = await supabase.from('lists').select().eq('id', inviteStore.invites.list_id).order('created_at', { ascending: false })
+    //     inviteStore.lists = data
+    //     console.log(inviteStore.lists)
+    // }
+
+    // if (userStore.session) {
+    //     getInviteLists()
+    // }
 </script>
 
 <template>

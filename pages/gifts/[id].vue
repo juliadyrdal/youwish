@@ -22,6 +22,10 @@ const { data } = await client.from('lists').select().eq('id', id).limit(1).singl
 
 return data
 })
+
+const refresh = () => {
+  console.log('refresh id')
+}
 </script>
 
 <style scoped>

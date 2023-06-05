@@ -21,7 +21,6 @@
         </div>
      </div>
     </div>
-    <p>here are invites {{ inviteStore.invites }}</p>
 </template>
 
 <script setup>
@@ -47,15 +46,6 @@ const inviteStore = useInviteStore()
 
     return data
   })
-
-  const { data: testInvites } = await useAsyncData('invites', async () => {
-    const { data } = await client.from('invites').select('list_id').eq('invitee_id', 'aa22a636-c744-4aa5-9127-5d50c7a1e219')
-
-    return data
-  })
-
-  console.log(testInvites.value)
- 
 
   const refresh = () => {
     refreshNuxtData()

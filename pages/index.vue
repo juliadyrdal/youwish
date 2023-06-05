@@ -1,12 +1,15 @@
 <script setup>
 import { useUserStore } from '../stores/UserStore'
 import { useProfileStore } from '~~/stores/ProfileStore';
+import { useInviteStore } from '~~/stores/InviteStore';
 
 const supabase = useSupabaseClient()
 const supabaseAuth = useSupabaseAuthClient()
 
 // initialize userStore
 const userStore = useUserStore()
+
+const inviteStore = useInviteStore()
 
 
 const { data: lists } = await useAsyncData('lists', async () => {
@@ -49,6 +52,11 @@ const { data: lists } = await useAsyncData('lists', async () => {
         </div> -->
         <div v-if="userStore.session">
           <p>{{ userStore.session.user.id }}</p>
+        </div>
+        <div v-if="userStore.session">
+          <div v-if="inviteStore.lists">
+            <p v-for="i in inviteStore.lists" :key="i.id">{{ i.title }} {{ i.description }}</p>
+          </div>
         </div>
         <!-- <div v-if="profileStore.profile">
           <p>{{ profileStore.profile.last_name }}</p>
