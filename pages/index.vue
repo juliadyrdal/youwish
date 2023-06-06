@@ -10,6 +10,7 @@ const supabaseAuth = useSupabaseAuthClient()
 const userStore = useUserStore()
 
 const inviteStore = useInviteStore()
+const profileStore = useProfileStore()
 
 
 const { data: lists } = await useAsyncData('lists', async () => {
@@ -17,6 +18,8 @@ const { data: lists } = await useAsyncData('lists', async () => {
 
   return data
 })
+
+const isLoading = true
 
 // const { data: profiles} = await useAsyncData('profiles', async () => {
 //   const { data } = await supabase.from('profiles').select('first_name').eq('id', userStore.session.user.id)
@@ -50,14 +53,12 @@ const { data: lists } = await useAsyncData('lists', async () => {
         <!-- <div v-if="profileStore.profile">
           <p>{{ profileStore.profile.first_name }}</p>
         </div> -->
-        <div v-if="userStore.session">
+        <div v-if="userStore.session && profileStore.profile">
           <p>{{ userStore.session.user.id }}</p>
         </div>
-        <div v-if="userStore.session">
-          <div v-if="inviteStore.lists">
+          <div>
             <p v-for="i in inviteStore.lists" :key="i.id">{{ i.title }} {{ i.description }}</p>
           </div>
-        </div>
         <!-- <div v-if="profileStore.profile">
           <p>{{ profileStore.profile.last_name }}</p>
         </div> -->

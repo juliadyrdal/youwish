@@ -36,7 +36,7 @@ supabaseAuth.auth.onAuthStateChange((event, session) => {
     }
 
 
-    // get profile of current user
+    // get invite lists of current user
     async function getInvites() {
         inviteStore.invites = []
         const { data } = await supabase.from('invites').select('list_id').eq('invitee_id', userStore.session.user.id)
@@ -51,17 +51,6 @@ supabaseAuth.auth.onAuthStateChange((event, session) => {
     if (userStore.session) {
         getInvites()
     } 
-
-
-    // async function getInviteLists() {
-    //     const { data } = await supabase.from('lists').select().eq('id', inviteStore.invites.list_id).order('created_at', { ascending: false })
-    //     inviteStore.lists = data
-    //     console.log(inviteStore.lists)
-    // }
-
-    // if (userStore.session) {
-    //     getInviteLists()
-    // }
 </script>
 
 <template>

@@ -42,7 +42,6 @@
           <ul v-if="userStore.session" class="flex gap-7 text-gray-700 text-nav">
               <li class=""><NuxtLink to="/lists" class="px-[1rem] py-[.5rem]">Wish lists</NuxtLink></li>
               <li class=""><NuxtLink to="/gifts" class="px-[1rem] py-[.5rem]">Gift lists</NuxtLink></li>
-              <li class=""><NuxtLink to="" class="px-[1rem] py-[.5rem]">Groups</NuxtLink></li>
           </ul>
           <ul class="flex gap-6 items-center">
             <li v-if="userStore.session" class="nav-btn"><NuxtLink to="/create" class="transition-colors flex items-center gap-2 text-[#364870] hover:bg-[#CFD5E2] border border-[#364870] hover:border-[#CFD5E2] rounded-md px-4 py-2 pr-6"><PlusIcon class="h-6 w-6 text-[#364870]"/>Create</NuxtLink></li>
