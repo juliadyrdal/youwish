@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 
 export const useItemStore = defineStore('itemStore', {
     state: () => ({
-        items: []
+        items: [],
+        isEditActive: false
     }),
     persist: true,
 })

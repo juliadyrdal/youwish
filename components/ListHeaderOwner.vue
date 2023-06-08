@@ -60,7 +60,7 @@
         isInviteModalOpen.value = false
     }
 
-    // insert new item into items table
+    // insert new item into items table 
     async function submitItem(newLink, newComment) {
       // wrap in if statement to prevent empty items
       if (newLink.value && newComment.value !== "") {

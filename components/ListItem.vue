@@ -8,14 +8,14 @@
         </div>
         <div v-if="isHovering" class="pt-1 col-span-4 flex justify-between">
           <ul class="flex gap-5 items-center">
-            <li><button><PencilIcon class="h-6 w-6 text-theme-dark hover:text-theme-medium transition-colors"/></button></li>
+            <li><button @click="editEvent"><PencilIcon class="h-6 w-6 text-theme-dark hover:text-theme-medium transition-colors"/></button></li>
             <li><button @click="$emit('openModal')"><TrashIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors"/></button></li>
           </ul>
-          <button class="flex gap-2 items-center font-medium text-theme-dark hover:underline">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></button>
+          <button class="font-medium text-theme-dark hover:underline"><a class="flex gap-2 items-center" :href="item.link" target="_blank" rel="noopener noreferrer">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></a></button>
         </div>
       </div>
       <div v-if="isEditActive">
-        <EditItem :item="item" />
+        <EditItem @handle-edit-submit="submitEdit" :item="item" />
       </div>
     </div>
 </template>
@@ -24,6 +24,8 @@
 import { PencilIcon } from "@heroicons/vue/24/solid/index.js"
 import { TrashIcon } from "@heroicons/vue/24/solid/index.js"
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline/index.js"
+
+const supabase = useSupabaseClient()
 
 const { item } = defineProps(['item'])
 
@@ -41,8 +43,14 @@ const isEditActive = ref(false)
 
 function editEvent() {
   isEditActive.value = true
-  console.log(isEditActive.value)
 }
+
+async function submitEdit(link, comment) {
+      const { data, error } = await supabase.from('items').update({ link: link.value, comment: comment.value }).eq('id', item.id).select()
+      if (data) {
+        isEditActive.value = false
+      }
+  }
 </script>
 
 <style scoped>

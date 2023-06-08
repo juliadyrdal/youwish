@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div class="main-container">
     <div class="fixed top-24 inset-x-48 bg-theme-lighter px-12 py-12 rounded-md shadow-sm">
       <p class="pb-10 text-theme-dark text-2xl font-medium">Add a new item to <span class="pl-1 font-bold">'{{ list.title }}'</span></p>
