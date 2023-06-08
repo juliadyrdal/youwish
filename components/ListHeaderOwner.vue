@@ -75,7 +75,7 @@
             owner_id: list.owner_id,
         })
       }
-    //   refreshNuxtData('items') STATE MANAGEMENT
+         refreshNuxtData()
     }
 
     function updateItems() {
