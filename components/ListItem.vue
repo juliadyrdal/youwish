@@ -9,7 +9,7 @@
         <div v-if="isHovering" class="pt-1 col-span-4 flex justify-between">
           <ul class="flex gap-5 items-center">
             <li><button @click="editEvent"><PencilIcon class="h-6 w-6 text-theme-dark hover:text-theme-medium transition-colors"/></button></li>
-            <li><button @click="$emit('openModal')"><TrashIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors"/></button></li>
+            <li><button @click="openDeleteModal"><TrashIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors"/></button></li>
           </ul>
           <button class="font-medium text-theme-dark hover:underline"><a class="flex gap-2 items-center" :href="item.link" target="_blank" rel="noopener noreferrer">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></a></button>
         </div>
@@ -52,6 +52,12 @@ async function submitEdit(link, comment) {
         refreshNuxtData()
       }
   }
+
+const emit = defineEmits(["handleItemDelete"])
+
+function openDeleteModal() {
+  emit("handleItemDelete", item)
+}
 </script>
 
 <style scoped>

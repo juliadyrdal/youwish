@@ -12,12 +12,18 @@
         <div class="flex flex-col gap-2">
           <div class="" v-for="item in items" :key="item.id">
             <div v-if="list.owner_id === userStore.session.user.id">
-              <ListItem @refresh-new-item="refresh" :item="item" />
+              <ListItem @handle-item-delete="deleteItem" @refresh-new-item="refresh" :item="item" />
             </div> 
             <div v-else>
               <ListItemGuest :reservedItems="reservedItems" :item="item" />
             </div> 
           </div> 
+        </div>
+        <div v-if="deleteIsActive">
+          <form @submit.prevent="confirmDelete">  
+            <p>Are you sure you want to delete this item?</p>
+            <button>Yes</button>
+          </form>
         </div>
      </div>
     </div>
@@ -56,6 +62,23 @@ const inviteStore = useInviteStore()
 
     return data
   })
+
+  const deleteIsActive = ref(false)
+
+  let currentItem = {}
+
+  function deleteItem(item) {
+    deleteIsActive.value = true
+    console.log("delete " + item.id)
+    return currentItem = item
+  }
+
+  async function confirmDelete() {
+      const { error } = await supabase.from('items').delete().eq('id', currentItem.id)
+      deleteIsActive.value = false
+      refreshNuxtData()
+  }
+
 </script>
 
 <style scoped>
