@@ -49,6 +49,7 @@ async function submitEdit(link, comment) {
       const { data, error } = await supabase.from('items').update({ link: link.value, comment: comment.value }).eq('id', item.id).select()
       if (data) {
         isEditActive.value = false
+        refreshNuxtData()
       }
   }
 </script>
