@@ -13,7 +13,7 @@
             <li v-else-if="reservedBy === userStore.session.user.id"><button @click="submitUnreservation">Undo reservation</button></li>
             <li v-else><button>This item has been reserved</button></li>
           </ul>
-          <button class="flex gap-2 items-center font-medium text-theme-dark hover:underline">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></button>
+          <button class="font-medium text-theme-dark hover:underline"><a class="flex gap-2 items-center" :href="item.link" target="_blank" rel="noopener noreferrer">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></a></button>
         </div>
       </div>
     </div>
