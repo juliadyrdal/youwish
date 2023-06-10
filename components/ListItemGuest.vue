@@ -9,9 +9,8 @@
         <div v-if="isHovering" class="pt-1 col-span-4 flex justify-between">
           <ul class="flex gap-5 items-center">
             <!-- <li v-if="!isReserved"><button @click="submitReservation"><BookmarkIcon class="h-6 w-6 text-theme-dark hover:text-red-600 transition-colors" /></button></li> -->
-            <li v-if="!isReserved"><button @click="submitReservation">Reserve this item</button></li>
+            <li v-if="!isReserved"><button class="flex gap-2 items-center py-2 px-4 rounded-md bg-white text-theme-dark" @click="submitReservation"><BookmarkIcon class="h-6 w-6 text-theme-dark" />Reserve this item</button></li>
             <li v-else-if="reservedBy === userStore.session.user.id"><button @click="submitUnreservation">Undo reservation</button></li>
-            <li v-else><button>This item has been reserved</button></li>
           </ul>
           <button class="font-medium text-theme-dark hover:underline"><a class="flex gap-2 items-center" :href="item.link" target="_blank" rel="noopener noreferrer">View <ArrowTopRightOnSquareIcon class="h-6 w-6 text-theme-dark"/></a></button>
         </div>
@@ -32,6 +31,14 @@ const userStore = useUserStore()
 
  const props = defineProps(['reservedItems', 'item'])
 
+ const itemToReserve = ref(props.item)
+
+ const emit = defineEmits(["submitReservation", "submitUnreservation"])
+
+  function emitReservationSubmit() {
+    emit("submitReservation", itemToReserve)
+  }
+
 
 const isHovering = ref(false)
 
@@ -43,25 +50,35 @@ function itemLeave() {
   isHovering.value = false
 }
 
+const isReserved = ref(false)
+const reservedBy = ref(null)
+
 // add error message
-// insert new reservation into reservations table
+// // insert new reservation into reservations table
 async function submitReservation() {
-    const { error } = await supabase.from('items')
+    const { data, error } = await supabase.from('items')
       .update({
         reserved_by: userStore.session.user.id
-      }).eq('id', props.item.id)
+      }).eq('id', props.item.id).select()
+      if (data) {
+        console.log(data)
+        refreshNuxtData()
+      }
+      isReserved.value = true
 }
 
 // remove item reservation
 async function submitUnreservation() {
-  const { error } = await supabase.from('items')
+  const { data, error } = await supabase.from('items')
     .update({
       reserved_by: null
-    }).eq('id', props.item.id)
+    }).eq('id', props.item.id).select()
+    if (data) {
+      console.log(data)
+      refreshNuxtData()
+    }
+     isReserved.value = false
 }
-
-const isReserved = ref(false)
-const reservedBy = ref('')
 
 const currentReservations = () => {
   props.reservedItems.forEach(element => {
@@ -73,8 +90,6 @@ const currentReservations = () => {
 }
 
 currentReservations()
-
-console.log(isReserved.value)
 </script>
 
 <style scoped>

@@ -7,8 +7,8 @@
         <h3 class="mb-2 text-2xl font-bold text-gray-900">{{ list.title }}</h3>
         <p class="mb-6 text-base text-gray-600 truncate">{{ list.description }}</p>
         <div class="pt-2 pb-4 flex justify-center gap-4">
-          <p class="text-xs font-light text-gray-500">4 items</p>
-          <p class="text-xs font-light text-gray-500">6 members</p>
+          <p class="text-xs font-light text-gray-500">{{ itemCount }} items</p>
+          <!-- <p class="text-xs font-light text-gray-500">6 members</p> -->
         </div>  
       <button class="mt-4 mb-2 w-full text-gray-700 border border-gray-600 px-16 py-1 rounded-md text-sm">View list</button>
       </div>
@@ -18,6 +18,17 @@
 
 <script setup>
   const { list } = defineProps(['list'])
+
+  const supabase = useSupabaseClient()
+
+  const itemCount = ref(null)
+
+  async function countListItems() {
+      const { data } = await supabase.from('items').select().eq('list_id', list.id)
+      itemCount.value = data.length
+  }
+
+  countListItems()
 
   const colorThemePrimary = computed(() => ({
     'green-primary': list.color_theme === 'green',
